@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBStudentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TblFindOfStudy">
+          <Key>
+            <PropertyRef Name="FindOfStudy" />
+          </Key>
+          <Property Name="FindOfStudy" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblStudent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StudentID" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="50" />
+          <Property Name="NasionalCode" Type="int" />
+          <Property Name="CityCertificate" Type="nvarchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="date" Nullable="false" />
+          <Property Name="FK_FieldOfStudy" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TblFindOfStudy_TblStudent">
+          <End Role="TblFindOfStudy" Type="Self.TblFindOfStudy" Multiplicity="1" />
+          <End Role="TblStudent" Type="Self.TblStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblFindOfStudy">
+              <PropertyRef Name="FindOfStudy" />
+            </Principal>
+            <Dependent Role="TblStudent">
+              <PropertyRef Name="FK_FieldOfStudy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBStudentModelStoreContainer">
+          <EntitySet Name="TblFindOfStudy" EntityType="Self.TblFindOfStudy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblStudent" EntityType="Self.TblStudent" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TblFindOfStudy_TblStudent" Association="Self.FK_TblFindOfStudy_TblStudent">
+            <End Role="TblFindOfStudy" EntitySet="TblFindOfStudy" />
+            <End Role="TblStudent" EntitySet="TblStudent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBStudentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TblFindOfStudy">
+          <Key>
+            <PropertyRef Name="FindOfStudy" />
+          </Key>
+          <Property Name="FindOfStudy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TblStudents" Relationship="Self.FK_TblFindOfStudy_TblStudent" FromRole="TblFindOfStudy" ToRole="TblStudent" />
+        </EntityType>
+        <EntityType Name="TblStudent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StudentID" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FatherName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NasionalCode" Type="Int32" />
+          <Property Name="CityCertificate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FK_FieldOfStudy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TblFindOfStudy" Relationship="Self.FK_TblFindOfStudy_TblStudent" FromRole="TblStudent" ToRole="TblFindOfStudy" />
+        </EntityType>
+        <Association Name="FK_TblFindOfStudy_TblStudent">
+          <End Role="TblFindOfStudy" Type="Self.TblFindOfStudy" Multiplicity="1" />
+          <End Role="TblStudent" Type="Self.TblStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblFindOfStudy">
+              <PropertyRef Name="FindOfStudy" />
+            </Principal>
+            <Dependent Role="TblStudent">
+              <PropertyRef Name="FK_FieldOfStudy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBStudentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TblFindOfStudies" EntityType="Self.TblFindOfStudy" />
+          <EntitySet Name="TblStudents" EntityType="Self.TblStudent" />
+          <AssociationSet Name="FK_TblFindOfStudy_TblStudent" Association="Self.FK_TblFindOfStudy_TblStudent">
+            <End Role="TblFindOfStudy" EntitySet="TblFindOfStudies" />
+            <End Role="TblStudent" EntitySet="TblStudents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBStudentModelStoreContainer" CdmEntityContainer="DBStudentEntities">
+          <EntitySetMapping Name="TblFindOfStudies">
+            <EntityTypeMapping TypeName="DBStudentModel.TblFindOfStudy">
+              <MappingFragment StoreEntitySet="TblFindOfStudy">
+                <ScalarProperty Name="FindOfStudy" ColumnName="FindOfStudy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblStudents">
+            <EntityTypeMapping TypeName="DBStudentModel.TblStudent">
+              <MappingFragment StoreEntitySet="TblStudent">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="NasionalCode" ColumnName="NasionalCode" />
+                <ScalarProperty Name="CityCertificate" ColumnName="CityCertificate" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="FK_FieldOfStudy" ColumnName="FK_FieldOfStudy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
